@@ -12,16 +12,19 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getNotes = void 0;
+exports.findByIdNote = void 0;
 const notesModels_1 = __importDefault(require("../schema/notesModels"));
-const getNotes = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+const findByIdNote = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const noteId = req.params.id;
     try {
-        const notes = yield notesModels_1.default.find();
-        res.json(notes);
+        const note = yield notesModels_1.default.findById(noteId);
+        if (!note) {
+            return res.status(404).json({ message: 'Заметка не найдена' });
+        }
+        res.json(note);
     }
     catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'Failed to fetch notes' });
+        res.status(500).json({ message: 'Не удалось найти заметку' });
     }
 });
-exports.getNotes = getNotes;
+exports.findByIdNote = findByIdNote;

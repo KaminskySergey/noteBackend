@@ -2,7 +2,6 @@ import express from 'express';
 import logger from 'morgan';
 import cors from 'cors';
 import routes from './routes/notes';
-import { Request, Response } from "express";
 
 export const app = express();
 
@@ -15,15 +14,6 @@ app.use(express.json());
 
 app.use('/api', routes);
 
-// Пустой обработчик для корневого маршрута "/"
-app.get('/', (req: Request, res: Response) => {
-    res.status(200).end();
-  });
-  
-  // Пустой обработчик для "/favicon.ico"
-  app.get('/favicon.ico', (req: Request, res: Response) => {
-    res.status(200).end();
-  });
 
 app.use((req, res) => {
     res.status(404).json({ message: "Not found" });

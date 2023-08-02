@@ -10,7 +10,6 @@ export const toggleArchived = async (req: Request, res: Response) => {
       if (!note) {
         return res.status(404).json({ message: 'Заметка не найдена' });
       }
-  
       note.archived = !note.archived;
   
       const updatedNote = await note.save();

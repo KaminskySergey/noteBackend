@@ -22,15 +22,52 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.noteSchema = void 0;
-const yup = __importStar(require("yup"));
-exports.noteSchema = yup.object({
-    name: yup.string().required(),
-    time: yup.date().required(),
-    category: yup.mixed().oneOf(['Task', 'Idea', 'Quota']).required(),
-    content: yup.string().required(),
-    dates: yup.array().of(yup.string()).required(),
-    archived: yup.boolean().required(),
-    arrayOfDate: yup.string().required(),
+exports.addArchived = exports.addValidation = void 0;
+const Yup = __importStar(require("yup"));
+const addValidation = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    const schema = Yup.object().shape({
+        name: Yup.string().required(),
+        time: Yup.date(),
+        category: Yup.string().oneOf(["Task", "Idea", "Quote"]).default("Quote"),
+        content: Yup.string().required(),
+        dates: Yup.array().of(Yup.string()),
+        archived: Yup.boolean().default(false),
+        arrayOfDate: Yup.string()
+            .required()
+            .matches(/^\d{4}-\d{2}-\d{2}$/)
+            .required(),
+    });
+    try {
+        yield schema.validate(req.body, { abortEarly: false });
+        next();
+    }
+    catch (error) {
+        return res.status(400).json({ status: error.errors, message: "Oops!" });
+    }
 });
+exports.addValidation = addValidation;
+const addArchived = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    const schema = Yup.object().shape({
+        archived: Yup.boolean().required(),
+    });
+    try {
+        yield schema.validate(req.body, { abortEarly: false });
+        next();
+    }
+    catch (error) {
+        return res
+            .status(400)
+            .json({ status: error.errors, message: "Validation failed" });
+    }
+});
+exports.addArchived = addArchived;

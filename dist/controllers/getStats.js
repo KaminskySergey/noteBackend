@@ -12,16 +12,22 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getNotes = void 0;
+exports.getStats = void 0;
 const notesModels_1 = __importDefault(require("../schema/notesModels"));
-const getNotes = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+const getStats = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const notes = yield notesModels_1.default.find();
-        res.json(notes);
+        const categories = ['Idea', 'Task', 'Quote'];
+        const stats = {};
+        for (const category of categories) {
+            const total = yield notesModels_1.default.countDocuments({ category });
+            const active = yield notesModels_1.default.countDocuments({ category, archived: false });
+            const archived = yield notesModels_1.default.countDocuments({ category, archived: true });
+            stats[category] = { total, active, archived };
+        }
+        res.json(stats);
     }
     catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'Failed to fetch notes' });
+        res.status(500).json({ message: 'Failed to fetch statistics' });
     }
 });
-exports.getNotes = getNotes;
+exports.getStats = getStats;

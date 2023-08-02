@@ -5,7 +5,19 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const getNotes_1 = require("../controllers/getNotes");
+const addNotes_1 = require("../controllers/addNotes");
+const validation_1 = require("../helpers/validation");
+const deleteNotes_1 = require("../controllers/deleteNotes");
+const findByIdNotes_1 = require("../controllers/findByIdNotes");
+const patchNotes_1 = require("../controllers/patchNotes");
+const toggleArchived_1 = require("../controllers/toggleArchived");
+const getStats_1 = require("../controllers/getStats");
 const router = express_1.default.Router();
 router.get('/notes', getNotes_1.getNotes);
-
+router.get('/notes/stats', getStats_1.getStats);
+router.post('/notes', validation_1.addValidation, addNotes_1.addNote);
+router.delete('/notes/:id', deleteNotes_1.deleteNote);
+router.get('/notes/:id', findByIdNotes_1.findByIdNote);
+router.patch('/notes/:id', validation_1.addValidation, patchNotes_1.patchNoteById);
+router.put('/notes/:archived', validation_1.addArchived, toggleArchived_1.toggleArchived);
 exports.default = router;
