@@ -1,6 +1,5 @@
 import express from 'express';
 import { Request, Response } from 'express';
-import routes from './routes/notes';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import { app } from './app';
@@ -8,8 +7,8 @@ dotenv.config();
 
 const port = 3000;
 
-app.use(express.json());
-app.use('/api', routes);
+
+
 
 const mongoURL = process.env.MONGO || 'mongodb://localhost:27017/notebook';
 
