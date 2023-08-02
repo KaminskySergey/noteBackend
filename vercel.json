@@ -1,11 +1,6 @@
 {
     "name": "node-server",
-    "builds": [
-        {
-            "src": "server.ts",
-            "use": "@vercel/node"
-        }
-    ],
+    
     "routes": [
         {
             "src": "/(.*)",
