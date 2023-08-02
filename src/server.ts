@@ -3,9 +3,9 @@ import { Request, Response } from 'express';
 import routes from './routes/notes';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
+import { app } from './app';
 dotenv.config();
 
-const app = express();
 const port = 3000;
 
 app.use(express.json());
