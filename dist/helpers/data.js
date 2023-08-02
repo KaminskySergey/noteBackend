@@ -1,7 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.notes = void 0;
-//   Quote
 exports.notes = [
     {
         id: "1",

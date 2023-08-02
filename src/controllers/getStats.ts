@@ -14,7 +14,6 @@ export const getStats = async (req: Request, res: Response) => {
       const categories = ['Idea', 'Task', 'Quote'];
       const stats: NoteStats = {};
   
-      // Выполняем запрос для каждой категории с фильтрацией по архивированным и неархивированным заметкам
       for (const category of categories) {
         const total = await NoteModele.countDocuments({ category });
         const active = await NoteModele.countDocuments({ category, archived: false });
