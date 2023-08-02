@@ -8,7 +8,7 @@
     "dev": "npm run build && set NODE_ENV=development && nodemon --exec ts-node ./src/server.ts",
     "lint": "eslint \"src/**/*.ts\"",
     "lint:fix": "eslint --fix \"src/**/*.ts\"",
-    "build": "tsc",
+    "build": "node -v && npm -v && npm clean-install && next build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
