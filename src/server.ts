@@ -1,17 +1,16 @@
 
-import { Request, Response } from 'express';
+
 import mongoose from 'mongoose';
-import dotenv from 'dotenv';
+import { config } from 'dotenv';
 import { app } from './app';
-dotenv.config();
 
 const port = 3000;
-
+config()
 
 
 
 const mongoURL = process.env.MONGO || 'mongodb://localhost:27017/notebook';
-
+console.log(process.env.MONGO, 'MONGOMONGOMONGOMONGOMONGOMONGOMONGO')
 mongoose.connect(mongoURL)
   .then(() => {
     app.listen(port, () => {
