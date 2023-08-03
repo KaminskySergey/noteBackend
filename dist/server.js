@@ -4,11 +4,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importDefault(require("mongoose"));
-const dotenv_1 = __importDefault(require("dotenv"));
+const dotenv_1 = require("dotenv");
 const app_1 = require("./app");
-dotenv_1.default.config();
 const port = 3000;
+(0, dotenv_1.config)();
 const mongoURL = process.env.MONGO || 'mongodb://localhost:27017/notebook';
+console.log(process.env.MONGO, 'MONGOMONGOMONGOMONGOMONGOMONGOMONGO');
 mongoose_1.default.connect(mongoURL)
     .then(() => {
     app_1.app.listen(port, () => {
